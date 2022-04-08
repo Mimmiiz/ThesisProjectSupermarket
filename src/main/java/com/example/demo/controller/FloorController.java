@@ -38,4 +38,16 @@ public class FloorController {
         }
         return "Deleted floor successfully";
     }
+
+    @PostMapping("/insertFloor")
+    public String insertFloor(@RequestBody Floor floor) {
+        try {
+            floorDAO.saveFloor(floor);
+        } catch (DataIntegrityViolationException e) {
+            return "Error, failed to insert floor: " + e.getRootCause().getMessage();
+        } catch (Exception e) {
+            return "Error, failed to delete floor: " + e.getMessage();
+        }
+        return "Successfully inserted floor.";
+    }
 }

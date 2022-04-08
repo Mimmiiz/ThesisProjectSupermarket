@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,6 +15,7 @@ public class ProductController {
 
     @GetMapping("/getProductById")
     public Product getProductById(@RequestParam(value = "id") Integer id) {
+        //Product product = new Product(1, "", "", "", "", "", 2, 1, "","", 10, null);
         return productDAO.getProductById(id);
     }
 
@@ -40,14 +40,7 @@ public class ProductController {
     }
 
     @PutMapping("/updateProduct")
-    public String updateProduct(@RequestParam(value = "id") Integer id, @RequestBody String json) {
-        Product product = new Product();
-        try {
-            product = product.fromJsonToProduct(json);
-        } catch (Exception e) {
-            return "Error, failed to deserialize JSON";
-        }
-
+    public String updateProduct(Integer id, @RequestBody Product product) {
         try {
             productDAO.saveProduct(product);
         } catch (Exception e) {
@@ -71,14 +64,7 @@ public class ProductController {
     }
 
     @PostMapping("/insertProduct")
-    public String insertProduct(@RequestBody String json) {
-        Product product = new Product();
-        try {
-            product = product.fromJsonToProduct(json);
-        } catch (Exception e) {
-            return "Error, failed to deserialize JSON";
-        }
-
+    public String insertProduct(@RequestBody Product product) {
         try {
             productDAO.saveProduct(product);
         } catch (Exception e) {
@@ -87,22 +73,16 @@ public class ProductController {
         return "Successfully inserted product";
     }
 
-    @PostMapping("/insertProducts")
-    public String insertProducts(@RequestBody String json) {
-        Product product = new Product();
-        List<Product> products = new ArrayList<>();
-        try {
-            products = product.fromJsonToListOfProducts(json);
-        } catch (Exception e) {
-            return "Error, failed to deserialize JSON";
-        }
 
+    @PostMapping("/insertProducts")
+    public String insertProducts(@RequestBody List<Product> products) {
         try {
             productDAO.insertProducts(products);
+        } catch (DataIntegrityViolationException e) {
+            return "Error, failed to insert products: " + e.getRootCause().getMessage();
         } catch (Exception e) {
             return "Error, failed to insert products: " + e.getMessage();
         }
         return "Successfully inserted products.";
     }
 }
-

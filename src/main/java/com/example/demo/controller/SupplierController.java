@@ -2,13 +2,11 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Supplier;
 import com.example.demo.repository.SupplierDAO;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
 
 @RestController
 public class SupplierController {
@@ -27,29 +25,13 @@ public class SupplierController {
     }
 
     @PutMapping("/updateSupplier")
-    public String updateSupplier(@RequestParam(value = "id") Integer id, @RequestBody String json) {
-        Supplier supplier = new Supplier();
-        try {
-            supplier.fromJsonToSupplier(json);
-        } catch (Exception e) {
-            return "Error, failed to deserialize JSON";
-        }
+    public String updateSupplier(@RequestParam(value = "id") Integer id, @RequestBody Supplier supplier) {
         supplierDAO.saveSupplier(supplier);
         return "Updated supplier successfully";
     }
 
     @PostMapping("/insertSupplier")
-    public String insertSupplier(@RequestBody String json) {
-        Supplier supplier = new Supplier();
-        /*supplier.setAddress("Matvagen 1");
-        supplier.setManufacturer("Mat Brand");
-        supplier.setWebsite("www.mat.se");
-        supplier.setBrand("Mat");*/
-        try {
-            supplier.fromJsonToSupplier(json);
-        } catch (Exception e) {
-            return "Error, failed to deserialize JSON";
-        }
+    public String insertSupplier(@RequestBody Supplier supplier) {
         try {
             supplierDAO.saveSupplier(supplier);
         } catch (Exception e) {

@@ -27,14 +27,7 @@ public class ContainerController {
     }
 
     @PostMapping("/insertContainer")
-    public String insertContainer (@RequestBody String json) {
-        Container container = new Container();
-        try {
-            container = container.fromJsonToContainer(json);
-        }
-        catch(Exception e){
-            return "Error, failed to deserialize JSON";
-        }
+    public String insertContainer (@RequestBody Container container) {
         try {
             containerDAO.saveContainer(container);
         } catch (Exception e) {
