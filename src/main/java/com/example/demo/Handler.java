@@ -5,13 +5,9 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.example.demo.controller.ProductController;
 import com.example.demo.controller.SupplierController;
 import com.example.demo.model.Product;
-import com.example.demo.model.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.IOException;
-
-public class Handler implements RequestHandler<String, String> {
-
+public class Handler implements RequestHandler<Integer, Product> {
 
     @Autowired
     private ProductController controller;
@@ -19,8 +15,7 @@ public class Handler implements RequestHandler<String, String> {
     private SupplierController supplierController;
 
     @Override
-    public String handleRequest(String input, Context context) {
-        //return supplierController.insertSupplier(input);
-        return "123";
+    public Product handleRequest(Integer input, Context context) {
+        return controller.getProductById(input);
     }
 }

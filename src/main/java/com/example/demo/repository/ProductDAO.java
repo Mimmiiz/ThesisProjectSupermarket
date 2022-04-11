@@ -2,11 +2,11 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Repository
 public class ProductDAO {
 
     @Autowired
@@ -34,6 +34,7 @@ public class ProductDAO {
     public Product getProductById(Integer id) {
         return this.productRepository.findById(id).get();
     }
+
     public void saveProduct(Product product) {
         productRepository.save(product);
     }
