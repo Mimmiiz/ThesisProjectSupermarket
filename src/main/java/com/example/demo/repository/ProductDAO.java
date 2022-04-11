@@ -39,8 +39,16 @@ public class ProductDAO {
         productRepository.save(product);
     }
 
-    public void deleteProduct(Integer id) {
+    public void deleteProductById(Integer id) {
         productRepository.deleteById(id);
+    }
+
+    public void deleteProductByGtin14(String gtin14) {
+        productRepository.deleteByGtin14(gtin14);
+    }
+
+    public void deleteProductByGtin12(String gtin12) {
+        productRepository.deleteByGtin12(gtin12);
     }
 
     public void insertProducts(List<Product> products) {

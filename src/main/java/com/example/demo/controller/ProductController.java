@@ -15,18 +15,17 @@ public class ProductController {
 
     @GetMapping("/getProductById")
     public Product getProductById(@RequestParam(value = "id") Integer id) {
-        //Product product = new Product(1, "", "", "", "", "", 2, 1, "","", 10, null);
         return productDAO.getProductById(id);
     }
 
     @GetMapping("/getProductByGtin14")
-    public Product getProductByGtin14(@RequestParam(value = "id") String id) {
-        return productDAO.getProductByGtin14(id);
+    public Product getProductByGtin14(@RequestParam(value = "id") String gtin14) {
+        return productDAO.getProductByGtin14(gtin14);
     }
 
     @GetMapping("/getProductByGtin12")
-    public Product getProductByGtin12(@RequestParam(value = "id") String id) {
-        return productDAO.getProductByGtin12(id);
+    public Product getProductByGtin12(@RequestParam(value = "id") String gtin12) {
+        return productDAO.getProductByGtin12(gtin12);
     }
 
     @GetMapping("/getProductByName")
@@ -40,7 +39,7 @@ public class ProductController {
     }
 
     @PutMapping("/updateProduct")
-    public String updateProduct(Integer id, @RequestBody Product product) {
+    public String updateProduct(@RequestBody Product product) {
         try {
             productDAO.saveProduct(product);
         } catch (Exception e) {
@@ -49,16 +48,44 @@ public class ProductController {
         return "Successfully updated product";
     }
 
-    @DeleteMapping("/deleteProduct")
-    public String deleteProduct(@RequestParam(value = "id") Integer id) {
+    @DeleteMapping("/deleteProductById")
+    public String deleteProductById(@RequestParam(value = "id") Integer id) {
         try {
-            productDAO.deleteProduct(id);
+            productDAO.deleteProductById(id);
         } catch (EmptyResultDataAccessException e) {
             return "No product with id " + id.toString() + " exists.";
         } catch (DataIntegrityViolationException e) {
             return "Error, failed to delete product: " + e.getRootCause().getMessage();
         } catch (Exception e) {
-            return "Error, failed to delete product " + e.getMessage();
+            return "Error, failed to delete product: " + e.getMessage();
+        }
+        return "Deleted product successfully";
+    }
+
+    @DeleteMapping("/deleteProductByGtin14")
+    public String deleteProductByGtin14(@RequestParam(value = "id") String gtin14) {
+        try {
+            productDAO.deleteProductByGtin14(gtin14);
+        } catch (EmptyResultDataAccessException e) {
+            return "No product with product number " + gtin14 + " exists.";
+        } catch (DataIntegrityViolationException e) {
+            return "Error, failed to delete product: " + e.getRootCause().getMessage();
+        } catch (Exception e) {
+            return "Error, failed to delete product: " + e.getMessage();
+        }
+        return "Deleted product successfully";
+    }
+
+    @DeleteMapping("/deleteProductByGtin12")
+    public String deleteProductByGtin12(@RequestParam(value = "id") String gtin12) {
+        try {
+            productDAO.deleteProductByGtin12(gtin12);
+        } catch (EmptyResultDataAccessException e) {
+            return "No product with product number " + gtin12 + " exists.";
+        } catch (DataIntegrityViolationException e) {
+            return "Error, failed to delete product: " + e.getRootCause().getMessage();
+        } catch (Exception e) {
+            return "Error, failed to delete product: " + e.getMessage();
         }
         return "Deleted product successfully";
     }

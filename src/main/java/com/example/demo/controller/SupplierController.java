@@ -25,7 +25,7 @@ public class SupplierController {
     }
 
     @PutMapping("/updateSupplier")
-    public String updateSupplier(@RequestParam(value = "id") Integer id, @RequestBody Supplier supplier) {
+    public String updateSupplier(@RequestBody Supplier supplier) {
         supplierDAO.saveSupplier(supplier);
         return "Updated supplier successfully";
     }
