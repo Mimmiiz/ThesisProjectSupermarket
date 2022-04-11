@@ -20,12 +20,12 @@ public class ProductController {
     }
 
     @GetMapping("/getProductByGtin14")
-    public Product getProductByGtin14(@RequestParam(value = "gtin14") String id) {
+    public Product getProductByGtin14(@RequestParam(value = "id") String id) {
         return productDAO.getProductByGtin14(id);
     }
 
     @GetMapping("/getProductByGtin12")
-    public Product getProductByGtin12(@RequestParam(value = "gtin12") String id) {
+    public Product getProductByGtin12(@RequestParam(value = "id") String id) {
         return productDAO.getProductByGtin12(id);
     }
 
