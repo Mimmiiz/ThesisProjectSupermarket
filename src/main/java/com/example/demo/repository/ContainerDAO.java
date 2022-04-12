@@ -21,6 +21,10 @@ public class ContainerDAO {
         containerRepository.deleteById(id);
     }
 
+    public Container getContainerByName(String name) {
+        return containerRepository.findByName(name).get(0);
+    }
+
     public void deleteContainerByName(String name) {
         containerRepository.deleteByName(name);
     }

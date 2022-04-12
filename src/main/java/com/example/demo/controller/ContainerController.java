@@ -22,7 +22,7 @@ public class ContainerController {
     @Autowired
     private FloorDAO floorDAO;
 
-    @GetMapping("/getContainer")
+    @GetMapping("/getContainerById")
     public Container getContainer (@RequestParam(value = "id") Integer id) {
         return containerDAO.getContainerById(id);
     }
@@ -30,6 +30,11 @@ public class ContainerController {
     @GetMapping("/getAllContainers")
     public List<Container> getAllContainers () {
         return containerDAO.getAllContainers();
+    }
+
+    @GetMapping("/getContainerByName")
+    public Container getContainer (@RequestParam(value = "id") String name) {
+        return containerDAO.getContainerByName(name);
     }
 
     @PostMapping("/insertContainer")

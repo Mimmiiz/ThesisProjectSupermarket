@@ -23,7 +23,7 @@ public class FloorController {
     }
 
     @GetMapping("/getFloorByFloorNumber")
-    public Floor getFloor(@RequestParam(value = "floorNumber") String floorNumber) {
+    public Floor getFloor(@RequestParam(value = "id") String floorNumber) {
         return floorDAO.getFloorByFloorNumber(floorNumber);
     }
 
