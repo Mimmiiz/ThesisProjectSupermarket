@@ -2,12 +2,12 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Container;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+@Service
 public class ContainerDAO {
 
     @Autowired
@@ -17,8 +17,12 @@ public class ContainerDAO {
         return containerRepository.findById(id).get();
     }
 
-    public void deleteContainer(Integer id) {
+    public void deleteContainerById(Integer id) {
         containerRepository.deleteById(id);
+    }
+
+    public void deleteContainerByName(String name) {
+        containerRepository.deleteByName(name);
     }
 
     public void saveContainer(Container container) {

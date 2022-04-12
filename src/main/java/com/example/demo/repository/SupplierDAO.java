@@ -2,9 +2,9 @@ package com.example.demo.repository;
 
 import com.example.demo.model.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+@Service
 public class SupplierDAO {
 
     @Autowired

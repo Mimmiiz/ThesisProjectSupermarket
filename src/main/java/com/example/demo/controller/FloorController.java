@@ -5,10 +5,12 @@ import com.example.demo.repository.FloorDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Transactional
 @RestController
 public class FloorController {
 
@@ -20,17 +22,36 @@ public class FloorController {
         return floorDAO.getFloorById(id);
     }
 
+    @GetMapping("/getFloorByFloorNumber")
+    public Floor getFloor(@RequestParam(value = "floorNumber") String floorNumber) {
+        return floorDAO.getFloorByFloorNumber(floorNumber);
+    }
+
     @GetMapping("/getAllFloors")
     public List<Floor> getAllFloors() {
         return floorDAO.getAllFloors();
     }
 
-    @DeleteMapping("/deleteFloor")
+    @DeleteMapping("/deleteFloorById")
     public String deleteFloor(@RequestParam(value = "id") Integer id) {
         try {
-            floorDAO.deleteFloor(id);
+            floorDAO.deleteFloorById(id);
         } catch (EmptyResultDataAccessException e) {
             return "No floor with id " + id.toString() + " exists.";
+        } catch (DataIntegrityViolationException e) {
+            return "Error, failed to delete floor: " + e.getRootCause().getMessage();
+        } catch (Exception e) {
+            return "Error, failed to delete floor " + e.getMessage();
+        }
+        return "Deleted floor successfully";
+    }
+
+    @DeleteMapping("/deleteFloorByFloorNumber")
+    public String deleteFloorByFloorNumber(@RequestParam(value = "id") String floorNumber) {
+        try {
+            floorDAO.deleteFloorByFloorNumber(floorNumber);
+        } catch (EmptyResultDataAccessException e) {
+            return "No floor with floor number " + floorNumber.toString() + " exists.";
         } catch (DataIntegrityViolationException e) {
             return "Error, failed to delete floor: " + e.getRootCause().getMessage();
         } catch (Exception e) {

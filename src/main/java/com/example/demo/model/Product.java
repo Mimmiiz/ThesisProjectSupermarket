@@ -49,10 +49,10 @@ public class Product {
     private String price;
 
     @Column(name = "re_order_level")
-    private int reOrderLevel;
+    private Integer reOrderLevel;
 
     @Column(name = "order_quantity")
-    private int orderQuantity;
+    private Integer orderQuantity;
 
     @Size(min = 1, max = 100)
     @Column(length = 100, name = "location_x")
@@ -63,7 +63,7 @@ public class Product {
     private String locationY;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
