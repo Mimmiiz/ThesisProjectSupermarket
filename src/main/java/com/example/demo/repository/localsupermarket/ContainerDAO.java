@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.demo.repository.localsupermarket;
 
-import com.example.demo.model.Container;
+import com.example.demo.model.localsupermarket.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

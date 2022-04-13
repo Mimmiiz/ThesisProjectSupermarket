@@ -1,6 +1,6 @@
 package com.example.demo.controller;
-import com.example.demo.model.Product;
-import com.example.demo.repository.ProductDAO;
+import com.example.demo.model.generalsupermarket.Product;
+import com.example.demo.repository.generalsupermarket.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Transactional
+@Transactional("generalSupermarketTransactionManager")
 @RestController
 public class ProductController {
 

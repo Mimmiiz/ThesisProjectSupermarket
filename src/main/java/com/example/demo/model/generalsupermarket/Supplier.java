@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.generalsupermarket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,20 +21,20 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    int id;
+    private int id;
 
     @NotNull
     @Size(min = 1, max = 100)
     @Column(length = 100, unique = true, nullable = false)
-    String brand;
+    private String brand;
 
     @Size(min = 1, max = 255)
     @Column(name = "manufacturer_name")
-    String manufacturer;
+    private String manufacturer;
 
     @Size(min = 0, max = 255)
-    String address;
+    private String address;
 
     @Size(min = 0, max = 255)
-    String website;
+    private String website;
 }

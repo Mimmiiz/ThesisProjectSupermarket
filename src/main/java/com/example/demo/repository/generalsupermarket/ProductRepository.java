@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.demo.repository.generalsupermarket;
 
-import com.example.demo.model.Product;
+import com.example.demo.model.generalsupermarket.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

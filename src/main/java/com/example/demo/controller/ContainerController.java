@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Container;
-import com.example.demo.model.Floor;
-import com.example.demo.repository.ContainerDAO;
-import com.example.demo.repository.FloorDAO;
+import com.example.demo.model.localsupermarket.Container;
+import com.example.demo.model.localsupermarket.Floor;
+import com.example.demo.repository.localsupermarket.ContainerDAO;
+import com.example.demo.repository.localsupermarket.FloorDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Transactional
+@Transactional("localSupermarketTransactionManager")
 @RestController
 public class ContainerController {
 
@@ -23,7 +23,7 @@ public class ContainerController {
     private FloorDAO floorDAO;
 
     @GetMapping("/getContainerById")
-    public Container getContainer (@RequestParam(value = "id") Integer id) {
+    public Container getContainerById(@RequestParam(value = "id") Integer id) {
         return containerDAO.getContainerById(id);
     }
 
@@ -33,7 +33,7 @@ public class ContainerController {
     }
 
     @GetMapping("/getContainerByName")
-    public Container getContainer (@RequestParam(value = "id") String name) {
+    public Container getContainerByName(@RequestParam(value = "id") String name) {
         return containerDAO.getContainerByName(name);
     }
 
@@ -49,8 +49,8 @@ public class ContainerController {
         return "Successfully inserted container.";
     }
 
-    @DeleteMapping("/deleteContainer")
-    public String deleteContainer(@RequestParam(value = "id") Integer id) {
+    @DeleteMapping("/deleteContainerById")
+    public String deleteContainerById(@RequestParam(value = "id") Integer id) {
         try {
             containerDAO.deleteContainerById(id);
         } catch (EmptyResultDataAccessException e) {
@@ -63,8 +63,8 @@ public class ContainerController {
         return "Deleted container successfully";
     }
 
-    @DeleteMapping("/deleteContainer")
-    public String deleteContainer(@RequestParam(value = "id") String name) {
+    @DeleteMapping("/deleteContainerByName")
+    public String deleteContainerByName(@RequestParam(value = "id") String name) {
         try {
             containerDAO.deleteContainerByName(name);
         } catch (EmptyResultDataAccessException e) {

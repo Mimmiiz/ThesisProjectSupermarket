@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Floor;
-import com.example.demo.repository.FloorDAO;
+import com.example.demo.model.localsupermarket.Floor;
+import com.example.demo.repository.localsupermarket.FloorDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Transactional
+@Transactional("localSupermarketTransactionManager")
 @RestController
 public class FloorController {
 
