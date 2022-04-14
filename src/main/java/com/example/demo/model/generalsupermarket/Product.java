@@ -44,6 +44,28 @@ public class Product {
     @Column(name = "product_name", length = 255, nullable = false)
     private String productName;
 
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(length = 255, nullable = false)
+    private String price;
+
+    @Column(name = "re_order_level")
+    private Integer reOrderLevel;
+
+    @Column(name = "order_quantity")
+    private Integer orderQuantity;
+
+    @Size(min = 1, max = 100)
+    @Column(length = 100, name = "location_x")
+    private String locationX;
+
+    @Size(min = 1, max = 100)
+    @Column(length = 100, name = "location_y")
+    private String locationY;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
