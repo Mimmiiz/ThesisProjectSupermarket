@@ -20,6 +20,10 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
             nativeQuery = true)
     Product findByGtin12(String gtin12);
 
+    @Query(value = "SELECT * FROM supermarket.product as tb1 JOIN product as tb2 ON tb1.gtin14 = tb2.gtin14 WHERE tb1.product_name = ?1",
+            nativeQuery = true)
+    List<Product> findByName(String name);
+
     @Query(value = "SELECT * FROM product as tb1 JOIN supermarket.product as tb2 ON tb1.gtin14 = tb2.gtin14", nativeQuery = true)
     List<Product> getAllProducts();
 

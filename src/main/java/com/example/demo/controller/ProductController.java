@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ProductDTO;
 import com.example.demo.model.localsupermarket.Product;
 import com.example.demo.repository.localsupermarket.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,24 +19,29 @@ public class ProductController {
     private ProductDAO productDAO;
 
     @GetMapping("/getProductByGtin14")
-    public Product getProductByGtin14(@RequestParam(value = "id") String gtin14) {
+    public ProductDTO getProductByGtin14(@RequestParam(value = "id") String gtin14) {
         return productDAO.getProductByGtin14(gtin14);
     }
 
     @GetMapping("/getProductByGtin12")
-    public Product getProductByGtin12(@RequestParam(value = "id") String gtin12) {
+    public ProductDTO getProductByGtin12(@RequestParam(value = "id") String gtin12) throws Exception {
         return productDAO.getProductByGtin12(gtin12);
     }
 
+    @GetMapping("/getProductByName")
+    public List<ProductDTO> getProductByName(@RequestParam(value = "name") String name) {
+        return productDAO.getProductByName(name);
+    }
+
     @GetMapping("/getAllProducts")
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productDAO.getAllProducts();
     }
 
     @PutMapping("/updateProduct")
-    public String updateProduct(@RequestBody Product product) {
+    public String updateProduct(@RequestParam(value = "floorNumber") String floorNumber, @RequestBody Product product) {
         try {
-            productDAO.updateProduct(product);
+            productDAO.updateProduct(product, floorNumber);
         } catch (Exception e) {
             return "Error, failed to update product.";
         }
@@ -71,9 +77,9 @@ public class ProductController {
     }
 
     @PostMapping("/insertProduct")
-    public String insertProduct(@RequestBody Product product {
+    public String insertProduct(@RequestParam(value = "floorNumber") String floorNumber, @RequestBody Product product) {
         try {
-            productDAO.insertProduct(product);
+            productDAO.insertProduct(product, floorNumber);
         } catch (Exception e) {
             return "Error, failed to insert product: " + e.getMessage();
         }
