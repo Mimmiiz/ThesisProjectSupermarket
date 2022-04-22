@@ -39,10 +39,8 @@ public class ContainerController {
 
     @PostMapping("/insertContainer")
     public String insertContainer (@RequestParam(value = "floorNumber") String floorNumber, @RequestBody Container container) {
-        Floor floor = floorDAO.getFloorByFloorNumber(floorNumber);
-        container.setFloor(floor);
         try {
-            containerDAO.saveContainer(container);
+            containerDAO.saveContainer(container, floorNumber);
         } catch (Exception e) {
             return "Error, failed to insert container: " + e.getMessage();
         }

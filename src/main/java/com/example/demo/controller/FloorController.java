@@ -67,7 +67,7 @@ public class FloorController {
         } catch (DataIntegrityViolationException e) {
             return "Error, failed to insert floor: " + e.getRootCause().getMessage();
         } catch (Exception e) {
-            return "Error, failed to delete floor: " + e.getMessage();
+            return "Error, failed to insert floor: " + e.getMessage();
         }
         return "Successfully inserted floor.";
     }

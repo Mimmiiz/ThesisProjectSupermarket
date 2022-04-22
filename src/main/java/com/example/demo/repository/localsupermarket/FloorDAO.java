@@ -35,7 +35,14 @@ public class FloorDAO {
         floorRepository.deleteByFloorNumber(floorNumber);
     }
 
-    public void saveFloor(Floor floor) {
-        floorRepository.save(floor);
+    public void saveFloor(Floor floor) throws Exception {
+        String floorNumber = floor.getFloorNumber();
+        List<Floor> floors = new ArrayList<>();
+        if(floorNumber == null)
+            throw new Exception("Floor number is missing.");
+        if(!floorRepository.findByFloorNumber(floorNumber).isEmpty())
+            throw new Exception("Floor with floor number " + floorNumber + " already exists.");
+        else
+            floorRepository.save(floor);
     }
 }
