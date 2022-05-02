@@ -62,30 +62,80 @@ public class ProductDAO {
         }
 
         Floor floor = null;
-        if(floorNumber != null) {
-            floor = floorRepository.findByFloorNumber(floorNumber).get(0);
-        }
+        if(floorNumber != null)
+            try {
+                floor = floorRepository.findByFloorNumber(floorNumber).get(0);
+            } catch(Exception e) {
+                throw new Exception("Could not find floor with floor number " + floorNumber);
+            }
 
-        productRepository.insertProduct(product.getGtin14(), product.getGtin12(), product.getPrice(), product.getReOrderLevel(), product.getOrderQuantity(),
-                product.getQuantity(), product.getLocationX(), product.getLocationY(), getFloorId(floor));
+        productRepository.insertProduct(product.getGtin14(), product.getGtin12(), product.getPrice(), product.getReOrderLevel(),
+                product.getOrderQuantity(), product.getQuantity(), product.getLocationX(), product.getLocationY(), getFloorId(floor));
     }
 
-    public void updateProduct(Product product, String floorNumber) {
+    public void updateProduct(Product product, String floorNumber) throws Exception {
         Floor floor = null;
-        if(floorNumber != null) {
-            floor = floorRepository.findByFloorNumber(floorNumber).get(0);
+        if (!floorNumber.isEmpty())
+            try {
+                floor = floorRepository.findByFloorNumber(floorNumber).get(0);
+            } catch(Exception e) {
+                throw new Exception("Could not find floor with floor number " + floorNumber);
+            }
+
+        if (product.getGtin14() == null && product.getGtin12() == null)
+            throw new Exception("No product code has been entered.");
+
+        if(product.getPrice() != null) {
+            if (productRepository.updatePrice(product.getGtin14(), product.getGtin12(), product.getPrice()) == 0)
+                throw new Exception("Could not find a product with the specified product number.");
         }
-
-        productRepository.updateProduct(product.getGtin14(), product.getGtin12(), product.getPrice(), product.getReOrderLevel(), product.getOrderQuantity(),
-                product.getQuantity(), product.getLocationX(), product.getLocationY(), getFloorId(floor));
+        if(product.getReOrderLevel() != null) {
+            if (productRepository.updateReOrderLevel(product.getGtin14(), product.getGtin12(), product.getReOrderLevel()) == 0)
+                throw new Exception("Could not find a product with the specified product number.");
+        }
+        if(product.getOrderQuantity() != null) {
+            if (productRepository.updateOrderQuantity(product.getGtin14(), product.getGtin12(), product.getOrderQuantity()) == 0)
+                throw new Exception("Could not find a product with the specified product number.");
+        }
+        if(product.getQuantity() != null) {
+            if (productRepository.updateQuantity(product.getGtin14(), product.getGtin12(), product.getQuantity()) == 0)
+                throw new Exception("Could not find a product with the specified product number.");
+        }
+        if(product.getLocationX() != null) {
+            if (productRepository.updateLocationX(product.getGtin14(), product.getGtin12(), product.getLocationX()) == 0)
+                throw new Exception("Could not find a product with the specified product number.");
+        }
+        if(product. getLocationY() != null) {
+            if (productRepository.updateLocationY(product.getGtin14(), product.getGtin12(), product.getLocationY()) == 0)
+                throw new Exception("Could not find a product with the specified product number.");
+        }
+        if(floor != null) {
+            if (productRepository.updateFloorId(product.getGtin14(), product.getGtin12(), getFloorId(floor)) == 0)
+                throw new Exception("Could not find a product with the specified product number.");
+        }
     }
 
-    public void deleteProductByGtin14(String gtin14) {
-        productRepository.deleteByGtin14(gtin14);
+    public void updateProductLocation(Product product) throws Exception {
+        if (product.getGtin12() != null) {
+            productRepository.updateLocationByGtin12(product.getGtin12(), product.getLocationX(), product.getLocationY());
+        }
+        else if (product.getGtin14() != null) {
+            productRepository.updateLocationByGtin12(product.getGtin14(), product.getLocationX(), product.getLocationY());
+        }
+        else
+            throw new Exception("No product code has been entered.");
     }
 
-    public void deleteProductByGtin12(String gtin12) {
-        productRepository.deleteByGtin12(gtin12);
+    public void deleteProductByGtin14(String gtin14) throws Exception {
+        if(productRepository.deleteByGtin14(gtin14) == 0)
+            throw new Exception("Could not delete a product with the specified product code: " + gtin14 +
+                    ", does not exist in the database.");
+    }
+
+    public void deleteProductByGtin12(String gtin12) throws Exception {
+        if(productRepository.deleteByGtin12(gtin12) == 0)
+            throw new Exception("Could not delete a product with the specified product code: " + gtin12 +
+                    ", does not exist in the database.");
     }
 
     public void insertProducts(List<Product> products) throws Exception {

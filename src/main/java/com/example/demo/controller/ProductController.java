@@ -43,7 +43,17 @@ public class ProductController {
         try {
             productDAO.updateProduct(product, floorNumber);
         } catch (Exception e) {
-            return "Error, failed to update product.";
+            return "Error, failed to update product: " + e.getMessage();
+        }
+        return "Successfully updated product";
+    }
+
+    @PutMapping("/updateProductLocation")
+    public String updateProductLocation(@RequestBody Product product) {
+        try {
+            productDAO.updateProductLocation(product);
+        } catch (Exception e) {
+            return "Error, failed to update product: " + e.getMessage();
         }
         return "Successfully updated product";
     }
