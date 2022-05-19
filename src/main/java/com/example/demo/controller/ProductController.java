@@ -18,14 +18,9 @@ public class ProductController {
     @Autowired
     private ProductDAO productDAO;
 
-    @GetMapping("/getProductByGtin14")
-    public ProductDTO getProductByGtin14(@RequestParam(value = "id") String gtin14) {
-        return productDAO.getProductByGtin14(gtin14);
-    }
-
-    @GetMapping("/getProductByGtin12")
-    public ProductDTO getProductByGtin12(@RequestParam(value = "id") String gtin12) throws Exception {
-        return productDAO.getProductByGtin12(gtin12);
+    @GetMapping("/getProductByGtin")
+    public ProductDTO getProductByGtin(@RequestParam(value = "id") String gtin) throws Exception {
+        return productDAO.getProductByGtin(gtin);
     }
 
     @GetMapping("/getProductByName")
@@ -58,26 +53,12 @@ public class ProductController {
         return "Successfully updated product";
     }
 
-    @DeleteMapping("/deleteProductByGtin14")
-    public String deleteProductByGtin14(@RequestParam(value = "id") String gtin14) {
+    @DeleteMapping("/deleteProductByGtin")
+    public String deleteProductByGtin(@RequestParam(value = "id") String gtin) {
         try {
-            productDAO.deleteProductByGtin14(gtin14);
+            productDAO.deleteProductByGtin(gtin);
         } catch (EmptyResultDataAccessException e) {
-            return "No product with product number " + gtin14 + " exists.";
-        } catch (DataIntegrityViolationException e) {
-            return "Error, failed to delete product: " + e.getRootCause().getMessage();
-        } catch (Exception e) {
-            return "Error, failed to delete product: " + e.getMessage();
-        }
-        return "Deleted product successfully";
-    }
-
-    @DeleteMapping("/deleteProductByGtin12")
-    public String deleteProductByGtin12(@RequestParam(value = "id") String gtin12) {
-        try {
-            productDAO.deleteProductByGtin12(gtin12);
-        } catch (EmptyResultDataAccessException e) {
-            return "No product with product number " + gtin12 + " exists.";
+            return "No product with product number " + gtin + " exists.";
         } catch (DataIntegrityViolationException e) {
             return "Error, failed to delete product: " + e.getRootCause().getMessage();
         } catch (Exception e) {

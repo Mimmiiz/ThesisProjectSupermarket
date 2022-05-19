@@ -49,33 +49,14 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     @Query(value = "UPDATE product SET location_x = :locationX, location_y = :locationY WHERE gtin12 = :gtin12", nativeQuery = true)
     int updateLocationByGtin12(@Param("gtin12") String gtin14, @Param("locationX") String locationX, @Param("locationY") String locationY);
 
-    @Modifying
-    @Query(value = "UPDATE product SET price = :price WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
-    int updatePrice(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("price") String price);
 
     @Modifying
-    @Query(value = "UPDATE product SET re_order_level = :reOrderLevel WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
-    int updateReOrderLevel(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("reOrderLevel") Integer reOrderLevel);
-
-    @Modifying
-    @Query(value = "UPDATE product SET order_quantity = :orderQuantity WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
-    int updateOrderQuantity(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("orderQuantity") Integer orderQuantity);
-
-    @Modifying
-    @Query(value = "UPDATE product SET quantity = :quantity WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
-    int updateQuantity(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("quantity") Integer quantity);
-
-    @Modifying
-    @Query(value = "UPDATE product SET location_x = :locationX WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
-    int updateLocationX(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("locationX") String locationX);
-
-    @Modifying
-    @Query(value = "UPDATE product SET location_y = :locationY WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
-    int updateLocationY(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("locationY") String locationY);
-
-    @Modifying
-    @Query(value = "UPDATE product SET floor_id = :floorId WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
-    int updateFloorId(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("floorId") Integer floorId);
+    @Query(value = "UPDATE product SET price = :price, re_order_level = :reOrderLevel, " +
+            "order_quantity = :orderQuantity, quantity = :quantity, location_x = :locationX, location_y = :locationY, " +
+            "floor_id = :floorId WHERE gtin14 = :gtin14 OR gtin12 = :gtin12", nativeQuery = true)
+    int updateProduct(@Param("gtin14") String gtin14, @Param("gtin12") String gtin12, @Param("price") String price, @Param("reOrderLevel") Integer reOrderLevel,
+                      @Param("orderQuantity") Integer orderQuantity, @Param("quantity") Integer quantity, @Param("locationX") String locationX,
+                      @Param("locationY") String locationY, @Param("floorId") Integer floorId);
 
     @Modifying
     @Query(value = "DELETE FROM product WHERE gtin14 = ?1", nativeQuery = true)
