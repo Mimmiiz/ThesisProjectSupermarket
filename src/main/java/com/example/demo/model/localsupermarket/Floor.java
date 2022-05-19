@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.localsupermarket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,20 +25,20 @@ public class Floor {
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "shape", nullable = false, length = 50)
-    String shape;
+    private String shape;
 
     @Column(name = "polygon_points")
-    String polygonPoints;
+    private String polygonPoints;
 
     @NotNull
     @Column(name = "center_point", length = 100, nullable = false)
-    String centerPoint;
+    private String centerPoint;
 
     @NotNull
     @Column(name = "opposite_point", length = 100, nullable = false)
-    String oppositePoint;
+    private String oppositePoint;
 
     @NotNull
     @Column(name = "floor_number", length = 10, unique = true, nullable = false)
-    String floorNumber;
+    private String floorNumber;
 }

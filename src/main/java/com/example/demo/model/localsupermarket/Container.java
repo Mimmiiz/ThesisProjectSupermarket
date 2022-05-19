@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.localsupermarket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,31 +19,31 @@ public class Container {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    int id;
+    private int id;
 
     @NotNull
     @Column(name = "name", unique = true, length = 100)
-    String name;
+    private String name;
 
     @NotNull
     @Column(name = "center_point", nullable = false, length = 100)
-    String centerPoint;
+    private String centerPoint;
 
     @NotNull
     @Column(name = "shape", nullable = false, length = 50)
-    String shape;
+    private String shape;
 
     @Column(name = "opposite_point", nullable = false, length = 100)
-    String oppositePoint;
+    private String oppositePoint;
 
     @Column(name = "radius", length = 50)
-    String containerRadius;
+    private String containerRadius;
 
     @Column(name = "polygon_points")
-    String polygonPoints;
+    private String polygonPoints;
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "floor_id")
-    Floor floor;
+    private Floor floor;
 }

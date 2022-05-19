@@ -1,10 +1,10 @@
-package com.example.demo.repository;
+package com.example.demo.repository.generalsupermarket;
 
-import com.example.demo.model.Supplier;
+import com.example.demo.model.generalsupermarket.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-@Repository
+@Service
 public class SupplierDAO {
 
     @Autowired

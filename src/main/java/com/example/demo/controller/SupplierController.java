@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Supplier;
-import com.example.demo.repository.SupplierDAO;
+import com.example.demo.model.generalsupermarket.Supplier;
+import com.example.demo.repository.generalsupermarket.SupplierDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -25,7 +25,7 @@ public class SupplierController {
     }
 
     @PutMapping("/updateSupplier")
-    public String updateSupplier(@RequestParam(value = "id") Integer id, @RequestBody Supplier supplier) {
+    public String updateSupplier(@RequestBody Supplier supplier) {
         supplierDAO.saveSupplier(supplier);
         return "Updated supplier successfully";
     }

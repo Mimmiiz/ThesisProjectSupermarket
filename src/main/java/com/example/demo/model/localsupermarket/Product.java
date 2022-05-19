@@ -1,10 +1,11 @@
-package com.example.demo.model;
+package com.example.demo.model.localsupermarket;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,8 +20,8 @@ import javax.validation.constraints.Size;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "grp_id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @NotNull
@@ -33,14 +34,7 @@ public class Product {
     @Column(unique = true, nullable = false)
     private String gtin12;
 
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(length = 100, nullable = false)
-    private String brand;
-
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "product_name", length = 255, nullable = false)
+    @Column(name = "product_name")
     private String productName;
 
     @NotNull
@@ -49,10 +43,10 @@ public class Product {
     private String price;
 
     @Column(name = "re_order_level")
-    private int reOrderLevel;
+    private Integer reOrderLevel;
 
     @Column(name = "order_quantity")
-    private int orderQuantity;
+    private Integer orderQuantity;
 
     @Size(min = 1, max = 100)
     @Column(length = 100, name = "location_x")
@@ -63,9 +57,12 @@ public class Product {
     private String locationY;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
+
+    @Column(name = "supplier_id")
+    private Integer supplierId;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+    @JoinColumn(name = "floor_id")
+    private Floor floor;
 }

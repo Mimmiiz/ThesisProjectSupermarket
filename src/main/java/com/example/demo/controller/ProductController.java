@@ -1,78 +1,81 @@
 package com.example.demo.controller;
-import com.example.demo.model.Product;
-import com.example.demo.repository.ProductDAO;
+
+import com.example.demo.dto.ProductDTO;
+import com.example.demo.model.localsupermarket.Product;
+import com.example.demo.repository.localsupermarket.ProductDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
+@Transactional("localSupermarketTransactionManager")
 @RestController
 public class ProductController {
 
     @Autowired
     private ProductDAO productDAO;
 
-    @GetMapping("/getProductById")
-    public Product getProductById(@RequestParam(value = "id") Integer id) {
-        //Product product = new Product(1, "", "", "", "", "", 2, 1, "","", 10, null);
-        return productDAO.getProductById(id);
-    }
-
-    @GetMapping("/getProductByGtin14")
-    public Product getProductByGtin14(@RequestParam(value = "id") String id) {
-        return productDAO.getProductByGtin14(id);
-    }
-
-    @GetMapping("/getProductByGtin12")
-    public Product getProductByGtin12(@RequestParam(value = "id") String id) {
-        return productDAO.getProductByGtin12(id);
+    @GetMapping("/getProductByGtin")
+    public ProductDTO getProductByGtin(@RequestParam(value = "id") String gtin) throws Exception {
+        return productDAO.getProductByGtin(gtin);
     }
 
     @GetMapping("/getProductByName")
-    public Product getProductByName(@RequestParam(value = "name") String name) {
+    public List<ProductDTO> getProductByName(@RequestParam(value = "name") String name) {
         return productDAO.getProductByName(name);
     }
 
     @GetMapping("/getAllProducts")
-    public List<Product> getAllProducts() {
+    public List<ProductDTO> getAllProducts() {
         return productDAO.getAllProducts();
     }
 
     @PutMapping("/updateProduct")
-    public String updateProduct(Integer id, @RequestBody Product product) {
+    public String updateProduct(@RequestParam(value = "floorNumber") String floorNumber, @RequestBody Product product) {
         try {
-            productDAO.saveProduct(product);
+            productDAO.updateProduct(product, floorNumber);
         } catch (Exception e) {
-            return "Error, failed to update product.";
+            return "Error, failed to update product: " + e.getMessage();
         }
         return "Successfully updated product";
     }
 
-    @DeleteMapping("/deleteProduct")
-    public String deleteProduct(@RequestParam(value = "id") Integer id) {
+    @PutMapping("/updateProductLocation")
+    public String updateProductLocation(@RequestBody Product product) {
         try {
-            productDAO.deleteProduct(id);
+            productDAO.updateProductLocation(product);
+        } catch (Exception e) {
+            return "Error, failed to update product: " + e.getMessage();
+        }
+        return "Successfully updated product";
+    }
+
+    @DeleteMapping("/deleteProductByGtin")
+    public String deleteProductByGtin(@RequestParam(value = "id") String gtin) {
+        try {
+            productDAO.deleteProductByGtin(gtin);
         } catch (EmptyResultDataAccessException e) {
-            return "No product with id " + id.toString() + " exists.";
+            return "No product with product number " + gtin + " exists.";
         } catch (DataIntegrityViolationException e) {
             return "Error, failed to delete product: " + e.getRootCause().getMessage();
         } catch (Exception e) {
-            return "Error, failed to delete product " + e.getMessage();
+            return "Error, failed to delete product: " + e.getMessage();
         }
         return "Deleted product successfully";
     }
 
     @PostMapping("/insertProduct")
-    public String insertProduct(@RequestBody Product product) {
+    public String insertProduct(@RequestParam(value = "floorNumber") String floorNumber, @RequestBody Product product) {
         try {
-            productDAO.saveProduct(product);
+            productDAO.insertProduct(product, floorNumber);
         } catch (Exception e) {
             return "Error, failed to insert product: " + e.getMessage();
         }
         return "Successfully inserted product";
     }
-
 
     @PostMapping("/insertProducts")
     public String insertProducts(@RequestBody List<Product> products) {
